@@ -4,7 +4,7 @@ import (
 	"github.com/hashicorp/nomad/api"
 	"github.com/rivo/tview"
 
-	"github.com/hcjulz/damon/models"
+	"github.com/hashicorp/damon/models"
 )
 
 type State struct {

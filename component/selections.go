@@ -5,11 +5,11 @@ import (
 
 	"github.com/rivo/tview"
 
-	"github.com/hcjulz/damon/primitives"
-	"github.com/hcjulz/damon/state"
-	"github.com/hcjulz/damon/styles"
+	"github.com/hashicorp/damon/primitives"
+	"github.com/hashicorp/damon/state"
+	"github.com/hashicorp/damon/styles"
 
-	"github.com/hcjulz/damon/models"
+	"github.com/hashicorp/damon/models"
 )
 
 var (

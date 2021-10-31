@@ -6,8 +6,8 @@ import (
 	"github.com/gdamore/tcell/v2"
 	"github.com/rivo/tview"
 
-	"github.com/hcjulz/damon/models"
-	"github.com/hcjulz/damon/primitives"
+	"github.com/hashicorp/damon/models"
+	"github.com/hashicorp/damon/primitives"
 )
 
 const jumpToJobPlaceholder = "(hit enter or esc to leave)"

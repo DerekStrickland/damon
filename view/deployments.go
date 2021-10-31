@@ -6,8 +6,8 @@ import (
 	"github.com/hashicorp/nomad/api"
 	"github.com/rivo/tview"
 
-	"github.com/hcjulz/damon/component"
-	"github.com/hcjulz/damon/models"
+	"github.com/hashicorp/damon/component"
+	"github.com/hashicorp/damon/models"
 )
 
 func (v *View) Deployments() {

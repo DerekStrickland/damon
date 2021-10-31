@@ -37,7 +37,7 @@ $ go install ./cmd/damon
 
 ### How to use it
 
-Once `Damon` is installed and avialable in your path, simply run:
+Once `Damon` is installed and available in your path, simply run:
 
 ```
 $ damon

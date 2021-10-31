@@ -5,7 +5,7 @@ import (
 
 	"github.com/hashicorp/nomad/api"
 
-	"github.com/hcjulz/damon/models"
+	"github.com/hashicorp/damon/models"
 )
 
 func (n *Nomad) JobAllocs(jobID string, so *SearchOptions) ([]*models.Alloc, error) {

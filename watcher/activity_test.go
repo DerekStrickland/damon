@@ -5,7 +5,7 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	"github.com/hcjulz/damon/watcher"
+	"github.com/hashicorp/damon/watcher"
 )
 
 func TestAdd(t *testing.T) {

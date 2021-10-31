@@ -6,7 +6,7 @@ import (
 	"github.com/rivo/tview"
 	"github.com/stretchr/testify/require"
 
-	"github.com/hcjulz/damon/layout"
+	"github.com/hashicorp/damon/layout"
 )
 
 func TestDefaultLayout(t *testing.T) {

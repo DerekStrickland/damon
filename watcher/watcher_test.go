@@ -8,10 +8,10 @@ import (
 	"github.com/hashicorp/nomad/api"
 	"github.com/stretchr/testify/require"
 
-	"github.com/hcjulz/damon/models"
-	"github.com/hcjulz/damon/state"
-	"github.com/hcjulz/damon/watcher"
-	"github.com/hcjulz/damon/watcher/watcherfakes"
+	"github.com/hashicorp/damon/models"
+	"github.com/hashicorp/damon/state"
+	"github.com/hashicorp/damon/watcher"
+	"github.com/hashicorp/damon/watcher/watcherfakes"
 )
 
 func TestSubscription(t *testing.T) {

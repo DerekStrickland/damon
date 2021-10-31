@@ -3,7 +3,7 @@ package watcher
 import (
 	"time"
 
-	"github.com/hcjulz/damon/models"
+	"github.com/hashicorp/damon/models"
 )
 
 // SubscribeToTaskGroups starts a goroutine to polls TaskGroups every two

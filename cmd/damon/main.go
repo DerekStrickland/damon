@@ -10,13 +10,13 @@ import (
 	"github.com/jessevdk/go-flags"
 	"github.com/rivo/tview"
 
-	"github.com/hcjulz/damon/nomad"
-	"github.com/hcjulz/damon/state"
-	"github.com/hcjulz/damon/styles"
-	"github.com/hcjulz/damon/view"
-	"github.com/hcjulz/damon/watcher"
+	"github.com/hashicorp/damon/nomad"
+	"github.com/hashicorp/damon/state"
+	"github.com/hashicorp/damon/styles"
+	"github.com/hashicorp/damon/view"
+	"github.com/hashicorp/damon/watcher"
 
-	"github.com/hcjulz/damon/component"
+	"github.com/hashicorp/damon/component"
 )
 
 var refreshIntervalDefault = time.Second * 2
@@ -55,6 +55,7 @@ func main() {
 	jobs := component.NewJobsTable()
 	jobStatus := component.NewJobStatus()
 	depl := component.NewDeploymentTable()
+	metrics := component.NewMetricsTable()
 	namespaces := component.NewNamespaceTable()
 	allocations := component.NewAllocationTable()
 	taskGroups := component.NewTaskGroupTable()
@@ -80,6 +81,7 @@ func main() {
 		JobTable:        jobs,
 		JobStatus:       jobStatus,
 		DeploymentTable: depl,
+		MetricsTable:    metrics,
 		NamespaceTable:  namespaces,
 		AllocationTable: allocations,
 		TaskGroupTable:  taskGroups,

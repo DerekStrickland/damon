@@ -4,7 +4,7 @@ package watcherfakes
 import (
 	"sync"
 
-	"github.com/hcjulz/damon/watcher"
+	"github.com/hashicorp/damon/watcher"
 )
 
 type FakeActivities struct {

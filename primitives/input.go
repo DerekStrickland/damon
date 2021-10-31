@@ -4,7 +4,7 @@ import (
 	"github.com/gdamore/tcell/v2"
 	"github.com/rivo/tview"
 
-	"github.com/hcjulz/damon/styles"
+	"github.com/hashicorp/damon/styles"
 )
 
 type InputField struct {

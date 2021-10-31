@@ -7,7 +7,7 @@ import (
 	"github.com/rivo/tview"
 	"github.com/stretchr/testify/require"
 
-	"github.com/hcjulz/damon/primitives"
+	"github.com/hashicorp/damon/primitives"
 )
 
 func TestTextView(t *testing.T) {

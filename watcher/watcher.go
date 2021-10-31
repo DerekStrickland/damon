@@ -5,9 +5,9 @@ import (
 
 	"github.com/hashicorp/nomad/api"
 
-	"github.com/hcjulz/damon/models"
-	"github.com/hcjulz/damon/nomad"
-	"github.com/hcjulz/damon/state"
+	"github.com/hashicorp/damon/models"
+	"github.com/hashicorp/damon/nomad"
+	"github.com/hashicorp/damon/state"
 )
 
 //go:generate counterfeiter . Activities

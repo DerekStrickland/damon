@@ -46,6 +46,11 @@ type EventsClient interface {
 	Stream(ctx context.Context, topics map[api.Topic][]string, index uint64, q *api.QueryOptions) (<-chan *api.Events, error)
 }
 
+//go:generate counterfeiter . MetricsClient
+type MetricsClient interface {
+	List(*api.QueryOptions) ([]byte, error)
+}
+
 type SearchOptions struct {
 	Namespace string
 	Region    string
@@ -57,6 +62,7 @@ type Nomad struct {
 	Client        Client
 	EventsClient  EventsClient
 	JobClient     JobClient
+	MetricsClient MetricsClient
 	NsClient      NamespaceClient
 	AllocClient   AllocationsClient
 	AllocFSClient AllocFSClient

@@ -4,7 +4,7 @@ package refresherfakes
 import (
 	"sync"
 
-	watcher "github.com/hcjulz/damon/refresher"
+	watcher "github.com/hashicorp/damon/refresher"
 )
 
 type FakeActivities struct {

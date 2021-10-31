@@ -4,8 +4,8 @@ package nomadfakes
 import (
 	"sync"
 
+	"github.com/hashicorp/damon/nomad"
 	"github.com/hashicorp/nomad/api"
-	"github.com/hcjulz/damon/nomad"
 )
 
 type FakeAllocationsClient struct {

@@ -3,10 +3,10 @@ package view
 import (
 	"github.com/hashicorp/nomad/api"
 
-	"github.com/hcjulz/damon/component"
-	"github.com/hcjulz/damon/layout"
-	"github.com/hcjulz/damon/models"
-	"github.com/hcjulz/damon/state"
+	"github.com/hashicorp/damon/component"
+	"github.com/hashicorp/damon/layout"
+	"github.com/hashicorp/damon/models"
+	"github.com/hashicorp/damon/state"
 )
 
 const historySize = 10
@@ -56,6 +56,7 @@ type Components struct {
 	JobTable        *component.JobTable
 	JobStatus       *component.JobStatus
 	DeploymentTable *component.DeploymentTable
+	MetricsTable    *component.MetricsTable
 	NamespaceTable  *component.NamespaceTable
 	AllocationTable *component.AllocationTable
 	TaskGroupTable  *component.TaskGroupTable

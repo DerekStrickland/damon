@@ -4,7 +4,7 @@ package componentfakes
 import (
 	"sync"
 
-	"github.com/hcjulz/damon/component"
+	"github.com/hashicorp/damon/component"
 )
 
 type FakeDoneModalFunc struct {

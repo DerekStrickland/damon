@@ -3,7 +3,7 @@ package watcher
 import (
 	"time"
 
-	"github.com/hcjulz/damon/models"
+	"github.com/hashicorp/damon/models"
 )
 
 // SubscribeToJobStatus starts a goroutine to polls JobStatus every two

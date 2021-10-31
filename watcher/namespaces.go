@@ -3,7 +3,7 @@ package watcher
 import (
 	"time"
 
-	"github.com/hcjulz/damon/models"
+	"github.com/hashicorp/damon/models"
 )
 
 // SubscribeToNamespaces starts a goroutine to poll Namespaces based

@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"regexp"
 
-	"github.com/hcjulz/damon/component"
-	"github.com/hcjulz/damon/models"
-	"github.com/hcjulz/damon/styles"
+	"github.com/hashicorp/damon/component"
+	"github.com/hashicorp/damon/models"
+	"github.com/hashicorp/damon/styles"
 )
 
 func (v *View) Logs(allocID, source string) {

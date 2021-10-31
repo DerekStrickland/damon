@@ -1,6 +1,6 @@
 package watcher
 
-import "github.com/hcjulz/damon/models"
+import "github.com/hashicorp/damon/models"
 
 // SubscribeToLogs starts an event stream for Logs
 // which updates the state whenever a new log is written.

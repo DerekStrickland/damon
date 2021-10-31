@@ -6,8 +6,8 @@ import (
 
 	"github.com/rivo/tview"
 
-	primitive "github.com/hcjulz/damon/primitives"
-	"github.com/hcjulz/damon/styles"
+	primitive "github.com/hashicorp/damon/primitives"
+	"github.com/hashicorp/damon/styles"
 )
 
 var (

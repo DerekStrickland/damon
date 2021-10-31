@@ -6,9 +6,9 @@ import (
 	"github.com/gdamore/tcell/v2"
 	"github.com/rivo/tview"
 
-	"github.com/hcjulz/damon/models"
-	primitive "github.com/hcjulz/damon/primitives"
-	"github.com/hcjulz/damon/styles"
+	"github.com/hashicorp/damon/models"
+	primitive "github.com/hashicorp/damon/primitives"
+	"github.com/hashicorp/damon/styles"
 )
 
 const (
@@ -56,24 +56,24 @@ func NewDeploymentTable() *DeploymentTable {
 	return dt
 }
 
-func (d *DeploymentTable) Bind(slot *tview.Flex) {
-	d.slot = slot
+func (m *DeploymentTable) Bind(slot *tview.Flex) {
+	m.slot = slot
 
 }
 
-func (d *DeploymentTable) Render() error {
-	if d.Props.SelectDeployment == nil || d.Props.HandleNoResources == nil {
+func (m *DeploymentTable) Render() error {
+	if m.Props.SelectDeployment == nil || m.Props.HandleNoResources == nil {
 		return ErrComponentPropsNotSet
 	}
 
-	if d.slot == nil {
+	if m.slot == nil {
 		return ErrComponentNotBound
 	}
 
-	d.reset()
+	m.reset()
 
-	if len(d.Props.Data) == 0 {
-		d.Props.HandleNoResources(
+	if len(m.Props.Data) == 0 {
+		m.Props.HandleNoResources(
 			"%sno deployments available\n¯%s\\_( ͡• ͜ʖ ͡•)_/¯",
 			styles.HighlightPrimaryTag,
 			styles.HighlightSecondaryTag,
@@ -82,27 +82,27 @@ func (d *DeploymentTable) Render() error {
 		return nil
 	}
 
-	d.Table.SetTitle(fmt.Sprintf("%s (%s)", TableTitleDeployments, d.Props.Namespace))
+	m.Table.SetTitle(fmt.Sprintf("%s (%s)", TableTitleDeployments, m.Props.Namespace))
 
-	d.Table.RenderHeader(TableHeaderDeployments)
-	d.renderRows()
+	m.Table.RenderHeader(TableHeaderDeployments)
+	m.renderRows()
 
-	d.slot.AddItem(d.Table.Primitive(), 0, 1, false)
+	m.slot.AddItem(m.Table.Primitive(), 0, 1, false)
 	return nil
 }
 
-func (d *DeploymentTable) reset() {
-	d.slot.Clear()
-	d.Table.Clear()
+func (m *DeploymentTable) reset() {
+	m.slot.Clear()
+	m.Table.Clear()
 }
 
-func (d *DeploymentTable) deploymentSelected(row, column int) {
-	deplID := d.Table.GetCellContent(row, 0)
-	d.Props.SelectDeployment(deplID)
+func (m *DeploymentTable) deploymentSelected(row, column int) {
+	deplID := m.Table.GetCellContent(row, 0)
+	m.Props.SelectDeployment(deplID)
 }
 
-func (d *DeploymentTable) renderRows() {
-	for i, dep := range d.Props.Data {
+func (m *DeploymentTable) renderRows() {
+	for i, dep := range m.Props.Data {
 		row := []string{
 			dep.ID,
 			dep.JobID,
@@ -113,12 +113,12 @@ func (d *DeploymentTable) renderRows() {
 
 		index := i + 1
 
-		c := d.getCellColor(dep.Status)
-		d.Table.RenderRow(row, index, c)
+		c := m.getCellColor(dep.Status)
+		m.Table.RenderRow(row, index, c)
 	}
 }
 
-func (d *DeploymentTable) getCellColor(status string) tcell.Color {
+func (m *DeploymentTable) getCellColor(status string) tcell.Color {
 	c := tcell.ColorWhite
 
 	switch status {

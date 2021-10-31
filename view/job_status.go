@@ -1,7 +1,7 @@
 package view
 
 import (
-	"github.com/hcjulz/damon/models"
+	"github.com/hashicorp/damon/models"
 )
 
 func (v *View) JobStatus(jobID string) {

@@ -6,8 +6,8 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	"github.com/hcjulz/damon/refresher"
-	"github.com/hcjulz/damon/refresher/refresherfakes"
+	"github.com/hashicorp/damon/refresher"
+	"github.com/hashicorp/damon/refresher/refresherfakes"
 )
 
 func TestWatch(t *testing.T) {

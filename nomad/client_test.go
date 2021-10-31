@@ -5,8 +5,8 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	. "github.com/hcjulz/damon/nomad"
-	"github.com/hcjulz/damon/nomad/nomadfakes"
+	. "github.com/hashicorp/damon/nomad"
+	"github.com/hashicorp/damon/nomad/nomadfakes"
 )
 
 func TestAddress(t *testing.T) {

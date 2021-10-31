@@ -5,7 +5,7 @@ import (
 	"sync"
 
 	tcell "github.com/gdamore/tcell/v2"
-	"github.com/hcjulz/damon/component"
+	"github.com/hashicorp/damon/component"
 	"github.com/rivo/tview"
 )
 

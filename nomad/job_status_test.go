@@ -5,10 +5,10 @@ import (
 	"testing"
 	"time"
 
+	"github.com/hashicorp/damon/models"
+	"github.com/hashicorp/damon/nomad"
+	"github.com/hashicorp/damon/nomad/nomadfakes"
 	"github.com/hashicorp/nomad/api"
-	"github.com/hcjulz/damon/models"
-	"github.com/hcjulz/damon/nomad"
-	"github.com/hcjulz/damon/nomad/nomadfakes"
 	"github.com/stretchr/testify/require"
 )
 

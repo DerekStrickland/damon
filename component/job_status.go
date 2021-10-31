@@ -5,8 +5,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/hcjulz/damon/models"
-	primitive "github.com/hcjulz/damon/primitives"
+	"github.com/hashicorp/damon/models"
+	primitive "github.com/hashicorp/damon/primitives"
 	"github.com/olekukonko/tablewriter"
 	"github.com/rivo/tview"
 )

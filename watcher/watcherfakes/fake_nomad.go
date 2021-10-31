@@ -4,10 +4,10 @@ package watcherfakes
 import (
 	"sync"
 
+	"github.com/hashicorp/damon/models"
+	"github.com/hashicorp/damon/nomad"
+	"github.com/hashicorp/damon/watcher"
 	"github.com/hashicorp/nomad/api"
-	"github.com/hcjulz/damon/models"
-	"github.com/hcjulz/damon/nomad"
-	"github.com/hcjulz/damon/watcher"
 )
 
 type FakeNomad struct {

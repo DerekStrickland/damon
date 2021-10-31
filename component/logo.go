@@ -5,7 +5,7 @@ import (
 
 	"github.com/rivo/tview"
 
-	primitive "github.com/hcjulz/damon/primitives"
+	primitive "github.com/hashicorp/damon/primitives"
 )
 
 var LogoASCII = []string{
