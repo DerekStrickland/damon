@@ -8,9 +8,9 @@ import (
 	"github.com/hashicorp/nomad/api"
 	"github.com/stretchr/testify/require"
 
-	"github.com/hcjulz/damon/models"
-	"github.com/hcjulz/damon/nomad"
-	"github.com/hcjulz/damon/nomad/nomadfakes"
+	"github.com/hashicorp/damon/models"
+	"github.com/hashicorp/damon/nomad"
+	"github.com/hashicorp/damon/nomad/nomadfakes"
 )
 
 func TestJobs(t *testing.T) {

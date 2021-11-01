@@ -75,6 +75,7 @@ On every table or text view, you can use:
 - Show Jobs: `ctrl-j`
 - Show Deployments: `ctrl-d`
 - Show Namespaces: `ctrl-n`
+- Show Metrics: `ctrl-m`
 - Jump to a Jobs Allocations: `ctrl-j`
 - Switch Namespace: `s`
 - Quit: `ctrl-c`

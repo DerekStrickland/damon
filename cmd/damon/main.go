@@ -55,7 +55,8 @@ func main() {
 	jobs := component.NewJobsTable()
 	jobStatus := component.NewJobStatus()
 	depl := component.NewDeploymentTable()
-	metrics := component.NewMetricsTable()
+	metrics := component.NewMetricsStream()
+	metricsSearch := component.NewSearchField()
 	namespaces := component.NewNamespaceTable()
 	allocations := component.NewAllocationTable()
 	taskGroups := component.NewTaskGroupTable()
@@ -81,7 +82,8 @@ func main() {
 		JobTable:        jobs,
 		JobStatus:       jobStatus,
 		DeploymentTable: depl,
-		MetricsTable:    metrics,
+		MetricsStream:   metrics,
+		MetricsSearch:   metricsSearch,
 		NamespaceTable:  namespaces,
 		AllocationTable: allocations,
 		TaskGroupTable:  taskGroups,

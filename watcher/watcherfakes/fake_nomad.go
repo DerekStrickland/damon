@@ -104,6 +104,19 @@ type FakeNomad struct {
 		result1 <-chan *api.StreamFrame
 		result2 <-chan error
 	}
+	MetricsStub        func(*nomad.SearchOptions) ([]byte, error)
+	metricsMutex       sync.RWMutex
+	metricsArgsForCall []struct {
+		arg1 *nomad.SearchOptions
+	}
+	metricsReturns struct {
+		result1 []byte
+		result2 error
+	}
+	metricsReturnsOnCall map[int]struct {
+		result1 []byte
+		result2 error
+	}
 	NamespacesStub        func(*nomad.SearchOptions) ([]*models.Namespace, error)
 	namespacesMutex       sync.RWMutex
 	namespacesArgsForCall []struct {
@@ -591,6 +604,70 @@ func (fake *FakeNomad) LogsReturnsOnCall(i int, result1 <-chan *api.StreamFrame,
 	}{result1, result2}
 }
 
+func (fake *FakeNomad) Metrics(arg1 *nomad.SearchOptions) ([]byte, error) {
+	fake.metricsMutex.Lock()
+	ret, specificReturn := fake.metricsReturnsOnCall[len(fake.metricsArgsForCall)]
+	fake.metricsArgsForCall = append(fake.metricsArgsForCall, struct {
+		arg1 *nomad.SearchOptions
+	}{arg1})
+	stub := fake.MetricsStub
+	fakeReturns := fake.metricsReturns
+	fake.recordInvocation("Metrics", []interface{}{arg1})
+	fake.metricsMutex.Unlock()
+	if stub != nil {
+		return stub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeNomad) MetricsCallCount() int {
+	fake.metricsMutex.RLock()
+	defer fake.metricsMutex.RUnlock()
+	return len(fake.metricsArgsForCall)
+}
+
+func (fake *FakeNomad) MetricsCalls(stub func(*nomad.SearchOptions) ([]byte, error)) {
+	fake.metricsMutex.Lock()
+	defer fake.metricsMutex.Unlock()
+	fake.MetricsStub = stub
+}
+
+func (fake *FakeNomad) MetricsArgsForCall(i int) *nomad.SearchOptions {
+	fake.metricsMutex.RLock()
+	defer fake.metricsMutex.RUnlock()
+	argsForCall := fake.metricsArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeNomad) MetricsReturns(result1 []byte, result2 error) {
+	fake.metricsMutex.Lock()
+	defer fake.metricsMutex.Unlock()
+	fake.MetricsStub = nil
+	fake.metricsReturns = struct {
+		result1 []byte
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeNomad) MetricsReturnsOnCall(i int, result1 []byte, result2 error) {
+	fake.metricsMutex.Lock()
+	defer fake.metricsMutex.Unlock()
+	fake.MetricsStub = nil
+	if fake.metricsReturnsOnCall == nil {
+		fake.metricsReturnsOnCall = make(map[int]struct {
+			result1 []byte
+			result2 error
+		})
+	}
+	fake.metricsReturnsOnCall[i] = struct {
+		result1 []byte
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeNomad) Namespaces(arg1 *nomad.SearchOptions) ([]*models.Namespace, error) {
 	fake.namespacesMutex.Lock()
 	ret, specificReturn := fake.namespacesReturnsOnCall[len(fake.namespacesArgsForCall)]
@@ -802,6 +879,8 @@ func (fake *FakeNomad) Invocations() map[string][][]interface{} {
 	defer fake.jobsMutex.RUnlock()
 	fake.logsMutex.RLock()
 	defer fake.logsMutex.RUnlock()
+	fake.metricsMutex.RLock()
+	defer fake.metricsMutex.RUnlock()
 	fake.namespacesMutex.RLock()
 	defer fake.namespacesMutex.RUnlock()
 	fake.streamMutex.RLock()

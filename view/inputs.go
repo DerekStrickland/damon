@@ -44,6 +44,9 @@ func (v *View) InputMainCommands(event *tcell.EventKey) *tcell.EventKey {
 	case tcell.KeyCtrlO, tcell.KeyEsc:
 		v.GoBack()
 
+	case tcell.KeyCtrlM:
+		v.Metrics()
+
 	case tcell.KeyCtrlP:
 		if !v.Layout.Footer.HasFocus() {
 			v.Layout.Container.SetFocus(v.components.LogSearch.InputField.Primitive())
@@ -104,6 +107,32 @@ func (v *View) InputLogs(event *tcell.EventKey) *tcell.EventKey {
 					return nil
 				} else {
 					v.Layout.Container.SetFocus(v.components.LogSearch.InputField.Primitive())
+				}
+
+			}
+		}
+	}
+
+	return event
+}
+
+func (v *View) InputMetrics(event *tcell.EventKey) *tcell.EventKey {
+	switch event.Key() {
+	case tcell.KeyEsc, tcell.KeyCtrlO, tcell.KeyEnter:
+		if v.components.MetricsStream.TextView.Primitive().HasFocus() {
+			v.GoBack()
+			return nil
+		}
+	case tcell.KeyRune:
+		switch event.Rune() {
+		case '/':
+			if !v.Layout.Footer.HasFocus() {
+				if !v.state.Toggle.MetricsSearch {
+					v.state.Toggle.MetricsSearch = true
+					v.LogSearch()
+					return nil
+				} else {
+					v.Layout.Container.SetFocus(v.components.MetricsSearch.InputField.Primitive())
 				}
 
 			}

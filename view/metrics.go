@@ -6,43 +6,41 @@ import (
 	"regexp"
 
 	"github.com/hashicorp/damon/component"
-	"github.com/hashicorp/damon/models"
 	"github.com/hashicorp/damon/styles"
 )
 
-func (v *View) Metrics(allocID, source string) {
+func (v *View) Metrics() {
 	v.Layout.Body.Clear()
 
-	v.Layout.Container.SetInputCapture(v.InputLogs)
-	v.components.Commands.Update(component.LogCommands)
+	v.Layout.Container.SetInputCapture(v.InputMetrics)
+	v.components.Commands.Update(component.MetricsCommands)
 
 	update := func() {
-		v.components.MetricsStreamView.Props.Data = filterMetrics(v.state.Metrics, v.state.Filter.Metrics)
-		v.components.LogStream.Render()
+		v.components.MetricsStream.Props.Data = filterMetrics(v.state.Metrics, v.state.Filter.Metrics)
+		v.components.MetricsStream.Render()
 		v.Draw()
 	}
 
-	v.Layout.Container.SetFocus(v.components.LogStream.TextView.Primitive())
+	v.Layout.Container.SetFocus(v.components.MetricsStream.TextView.Primitive())
 
 	update()
 
-	v.Watcher.SubscribeToLogs(allocID, source, update)
+	v.Watcher.SubscribeToMetrics(update)
 
-	v.addToHistory(v.state.SelectedNamespace, models.TopicLog, func() {
-		update()
-		// v.Logs(allocID)
-	})
+	//v.addToHistory(v.state.SelectedNamespace, models.TopicLog, func() {
+	//	update()
+	//})
 
-	v.Layout.Container.SetInputCapture(v.InputLogs)
+	v.Layout.Container.SetInputCapture(v.InputMetrics)
 }
 
-func filterLogs(logs []byte, filter string) []byte {
+func filterMetrics(metrics []byte, filter string) []byte {
 	buf := bytes.Buffer{}
 	defer buf.Reset()
 
 	if filter != "" {
 		rx, _ := regexp.Compile(filter)
-		logLines := bytes.Split(logs, []byte("\n"))
+		logLines := bytes.Split(metrics, []byte("\n"))
 		var result []byte
 		for _, log := range logLines {
 			if rx.Match(log) {
@@ -65,7 +63,7 @@ func filterLogs(logs []byte, filter string) []byte {
 		return result
 	}
 
-	fmt.Fprintf(&buf, "%s%s", styles.ColorWhiteTag, logs)
+	fmt.Fprintf(&buf, "%s%s", styles.ColorWhiteTag, metrics)
 
 	return buf.Bytes()
 }

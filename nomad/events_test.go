@@ -7,8 +7,8 @@ import (
 	"github.com/hashicorp/nomad/api"
 	"github.com/stretchr/testify/require"
 
-	"github.com/hcjulz/damon/nomad"
-	"github.com/hcjulz/damon/nomad/nomadfakes"
+	"github.com/hashicorp/damon/nomad"
+	"github.com/hashicorp/damon/nomad/nomadfakes"
 )
 
 func TestStream(t *testing.T) {

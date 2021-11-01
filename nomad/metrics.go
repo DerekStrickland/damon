@@ -1,60 +1,28 @@
 package nomad
 
 import (
-	"bytes"
-	"encoding/json"
+	"fmt"
 
-	"github.com/hashicorp/damon/models"
 	"github.com/hashicorp/nomad/api"
-	"github.com/prometheus/client_golang/prometheus"
 )
 
-func (n *Nomad) List(_ *SearchOptions) (*models.Metrics, error) {
-	payload, err := n.MetricsClient.List(nil)
+// Metrics retrieves metrics from the server. The endpoint does not support
+// streaming or blocking queries, so the client needs to periodically request
+// metrics and broadcast them to the UI.
+func (n *Nomad) Metrics(so *SearchOptions) ([]byte, error) {
+	if so == nil {
+		so = &SearchOptions{
+			Namespace: "*",
+		}
+	}
+
+	metrics, err := n.MetricsClient.Metrics(&api.QueryOptions{
+		Namespace: so.Namespace,
+		Region:    so.Region,
+	})
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to retrieve metrics: %w", err)
 	}
 
-	return toMetrics(payload)
-}
-
-// We don't have the client configuration, so we don't know which type of metrics
-// we get back. So we'll have to try to decode the payload and load it to our
-// model object.
-func toMetrics(b []byte) (*models.Metrics, error) {
-	payload, err := decode(b)
-	if err != nil {
-		return nil, err
-	}
-
-	return &models.Metrics{
-		Format:  resolveFormat(payload),
-		Payload: payload,
-	}, nil
-}
-
-func decode(b []byte) (interface{}, error) {
-	var payload interface{}
-
-	reader := bytes.NewReader(b)
-	decoder := json.NewDecoder(reader)
-
-	err := decoder.Decode(&payload)
-	if err != nil {
-		return nil, err
-	}
-
-	return payload, nil
-}
-
-func resolveFormat(payload interface{}) models.MetricsFormat {
-	if _, ok := payload.(api.MetricsSummary); ok {
-		return models.NomadMetrics
-	}
-
-	if _, ok := payload.(prometheus.Metric); ok {
-		return models.PrometheusMetrics
-	}
-
-	return models.UnknownMetrics
+	return metrics, nil
 }

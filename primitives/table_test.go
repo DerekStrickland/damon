@@ -7,8 +7,8 @@ import (
 	"github.com/rivo/tview"
 	"github.com/stretchr/testify/require"
 
-	"github.com/hcjulz/damon/primitives"
-	"github.com/hcjulz/damon/styles"
+	"github.com/hashicorp/damon/primitives"
+	"github.com/hashicorp/damon/styles"
 )
 
 func TestTable(t *testing.T) {

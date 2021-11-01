@@ -17,6 +17,7 @@ var (
 		fmt.Sprintf("%s<ctrl-d>%s to display Deployments", styles.HighlightPrimaryTag, styles.StandardColorTag),
 		fmt.Sprintf("%s<ctrl-n>%s to display Namespaces", styles.HighlightPrimaryTag, styles.StandardColorTag),
 		fmt.Sprintf("%s<ctrl-p>%s to jump to a Job", styles.HighlightPrimaryTag, styles.StandardColorTag),
+		fmt.Sprintf("%s<ctrl-m>%s to jump to Metrics", styles.HighlightPrimaryTag, styles.StandardColorTag),
 		fmt.Sprintf("%s<ctrl-c>%s to Quit", styles.HighlightPrimaryTag, styles.StandardColorTag),
 	}
 
@@ -36,6 +37,12 @@ var (
 
 	LogCommands = []string{
 		fmt.Sprintf("\n%sLog Commands:", styles.HighlightSecondaryTag),
+		fmt.Sprintf("%s<Enter> | <ESC>%s to leave", styles.HighlightPrimaryTag, styles.StandardColorTag),
+		fmt.Sprintf("%s</>%s apply filter", styles.HighlightPrimaryTag, styles.StandardColorTag),
+	}
+
+	MetricsCommands = []string{
+		fmt.Sprintf("\n%sMetrics Commands:", styles.HighlightSecondaryTag),
 		fmt.Sprintf("%s<Enter> | <ESC>%s to leave", styles.HighlightPrimaryTag, styles.StandardColorTag),
 		fmt.Sprintf("%s</>%s apply filter", styles.HighlightPrimaryTag, styles.StandardColorTag),
 	}

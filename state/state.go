@@ -15,7 +15,7 @@ type State struct {
 	Deployments []*models.Deployment
 	TaskGroups  []*models.TaskGroup
 	Allocations []*models.Alloc
-	Metrics     *models.Metrics
+	Metrics     []byte
 	Namespaces  []*models.Namespace
 	Logs        []byte
 	JobStatus   *models.JobStatus
@@ -45,9 +45,10 @@ type Filter struct {
 }
 
 type Toggle struct {
-	JumpToJob bool
-	Search    bool
-	LogSearch bool
+	JumpToJob     bool
+	Search        bool
+	LogSearch     bool
+	MetricsSearch bool
 }
 
 type Elements struct {

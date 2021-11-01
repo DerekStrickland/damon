@@ -26,8 +26,9 @@ type Nomad interface {
 	TaskGroups(string, *nomad.SearchOptions) ([]*models.TaskGroup, error)
 	Allocations(*nomad.SearchOptions) ([]*models.Alloc, error)
 	JobAllocs(string, *nomad.SearchOptions) ([]*models.Alloc, error)
-	Logs(allocID, taskNmae, logType string, cancel <-chan struct{}) (<-chan *api.StreamFrame, <-chan error)
+	Logs(allocID, taskName, logType string, cancel <-chan struct{}) (<-chan *api.StreamFrame, <-chan error)
 	Stream(topics nomad.Topics, index uint64) (<-chan *api.Events, error)
+	Metrics(*nomad.SearchOptions) ([]byte, error)
 }
 
 // Watcher watches a Nomad cluster for updates and
@@ -82,7 +83,7 @@ func (w *Watcher) Unsubscribe() {
 	w.subscriber = nil
 }
 
-// SubscribeHandler subscribes a handler to the watcher. This can be an for example an error
+// SubscribeHandler subscribes a handler to the watcher. This can be for example an error
 // handler. The handler types are defined in the models package.
 func (w *Watcher) SubscribeHandler(handler models.Handler, handle func(string, ...interface{})) {
 	w.handlers[handler] = handle

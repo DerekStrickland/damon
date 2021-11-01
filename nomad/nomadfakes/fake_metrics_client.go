@@ -9,33 +9,48 @@ import (
 )
 
 type FakeMetricsClient struct {
-	ListStub        func(*api.QueryOptions) ([]byte, error)
-	listMutex       sync.RWMutex
-	listArgsForCall []struct {
+	MetricsStub        func(*api.QueryOptions) ([]byte, error)
+	metricsMutex       sync.RWMutex
+	metricsArgsForCall []struct {
 		arg1 *api.QueryOptions
 	}
-	listReturns struct {
+	metricsReturns struct {
 		result1 []byte
 		result2 error
 	}
-	listReturnsOnCall map[int]struct {
+	metricsReturnsOnCall map[int]struct {
 		result1 []byte
 		result2 error
+	}
+	MetricsSummaryStub        func(*api.QueryOptions) (*api.MetricsSummary, *api.QueryMeta, error)
+	metricsSummaryMutex       sync.RWMutex
+	metricsSummaryArgsForCall []struct {
+		arg1 *api.QueryOptions
+	}
+	metricsSummaryReturns struct {
+		result1 *api.MetricsSummary
+		result2 *api.QueryMeta
+		result3 error
+	}
+	metricsSummaryReturnsOnCall map[int]struct {
+		result1 *api.MetricsSummary
+		result2 *api.QueryMeta
+		result3 error
 	}
 	invocations      map[string][][]interface{}
 	invocationsMutex sync.RWMutex
 }
 
-func (fake *FakeMetricsClient) List(arg1 *api.QueryOptions) ([]byte, error) {
-	fake.listMutex.Lock()
-	ret, specificReturn := fake.listReturnsOnCall[len(fake.listArgsForCall)]
-	fake.listArgsForCall = append(fake.listArgsForCall, struct {
+func (fake *FakeMetricsClient) Metrics(arg1 *api.QueryOptions) ([]byte, error) {
+	fake.metricsMutex.Lock()
+	ret, specificReturn := fake.metricsReturnsOnCall[len(fake.metricsArgsForCall)]
+	fake.metricsArgsForCall = append(fake.metricsArgsForCall, struct {
 		arg1 *api.QueryOptions
 	}{arg1})
-	stub := fake.ListStub
-	fakeReturns := fake.listReturns
-	fake.recordInvocation("List", []interface{}{arg1})
-	fake.listMutex.Unlock()
+	stub := fake.MetricsStub
+	fakeReturns := fake.metricsReturns
+	fake.recordInvocation("Metrics", []interface{}{arg1})
+	fake.metricsMutex.Unlock()
 	if stub != nil {
 		return stub(arg1)
 	}
@@ -45,56 +60,125 @@ func (fake *FakeMetricsClient) List(arg1 *api.QueryOptions) ([]byte, error) {
 	return fakeReturns.result1, fakeReturns.result2
 }
 
-func (fake *FakeMetricsClient) ListCallCount() int {
-	fake.listMutex.RLock()
-	defer fake.listMutex.RUnlock()
-	return len(fake.listArgsForCall)
+func (fake *FakeMetricsClient) MetricsCallCount() int {
+	fake.metricsMutex.RLock()
+	defer fake.metricsMutex.RUnlock()
+	return len(fake.metricsArgsForCall)
 }
 
-func (fake *FakeMetricsClient) ListCalls(stub func(*api.QueryOptions) ([]byte, error)) {
-	fake.listMutex.Lock()
-	defer fake.listMutex.Unlock()
-	fake.ListStub = stub
+func (fake *FakeMetricsClient) MetricsCalls(stub func(*api.QueryOptions) ([]byte, error)) {
+	fake.metricsMutex.Lock()
+	defer fake.metricsMutex.Unlock()
+	fake.MetricsStub = stub
 }
 
-func (fake *FakeMetricsClient) ListArgsForCall(i int) *api.QueryOptions {
-	fake.listMutex.RLock()
-	defer fake.listMutex.RUnlock()
-	argsForCall := fake.listArgsForCall[i]
+func (fake *FakeMetricsClient) MetricsArgsForCall(i int) *api.QueryOptions {
+	fake.metricsMutex.RLock()
+	defer fake.metricsMutex.RUnlock()
+	argsForCall := fake.metricsArgsForCall[i]
 	return argsForCall.arg1
 }
 
-func (fake *FakeMetricsClient) ListReturns(result1 []byte, result2 error) {
-	fake.listMutex.Lock()
-	defer fake.listMutex.Unlock()
-	fake.ListStub = nil
-	fake.listReturns = struct {
+func (fake *FakeMetricsClient) MetricsReturns(result1 []byte, result2 error) {
+	fake.metricsMutex.Lock()
+	defer fake.metricsMutex.Unlock()
+	fake.MetricsStub = nil
+	fake.metricsReturns = struct {
 		result1 []byte
 		result2 error
 	}{result1, result2}
 }
 
-func (fake *FakeMetricsClient) ListReturnsOnCall(i int, result1 []byte, result2 error) {
-	fake.listMutex.Lock()
-	defer fake.listMutex.Unlock()
-	fake.ListStub = nil
-	if fake.listReturnsOnCall == nil {
-		fake.listReturnsOnCall = make(map[int]struct {
+func (fake *FakeMetricsClient) MetricsReturnsOnCall(i int, result1 []byte, result2 error) {
+	fake.metricsMutex.Lock()
+	defer fake.metricsMutex.Unlock()
+	fake.MetricsStub = nil
+	if fake.metricsReturnsOnCall == nil {
+		fake.metricsReturnsOnCall = make(map[int]struct {
 			result1 []byte
 			result2 error
 		})
 	}
-	fake.listReturnsOnCall[i] = struct {
+	fake.metricsReturnsOnCall[i] = struct {
 		result1 []byte
 		result2 error
 	}{result1, result2}
+}
+
+func (fake *FakeMetricsClient) MetricsSummary(arg1 *api.QueryOptions) (*api.MetricsSummary, *api.QueryMeta, error) {
+	fake.metricsSummaryMutex.Lock()
+	ret, specificReturn := fake.metricsSummaryReturnsOnCall[len(fake.metricsSummaryArgsForCall)]
+	fake.metricsSummaryArgsForCall = append(fake.metricsSummaryArgsForCall, struct {
+		arg1 *api.QueryOptions
+	}{arg1})
+	stub := fake.MetricsSummaryStub
+	fakeReturns := fake.metricsSummaryReturns
+	fake.recordInvocation("MetricsSummary", []interface{}{arg1})
+	fake.metricsSummaryMutex.Unlock()
+	if stub != nil {
+		return stub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2, ret.result3
+	}
+	return fakeReturns.result1, fakeReturns.result2, fakeReturns.result3
+}
+
+func (fake *FakeMetricsClient) MetricsSummaryCallCount() int {
+	fake.metricsSummaryMutex.RLock()
+	defer fake.metricsSummaryMutex.RUnlock()
+	return len(fake.metricsSummaryArgsForCall)
+}
+
+func (fake *FakeMetricsClient) MetricsSummaryCalls(stub func(*api.QueryOptions) (*api.MetricsSummary, *api.QueryMeta, error)) {
+	fake.metricsSummaryMutex.Lock()
+	defer fake.metricsSummaryMutex.Unlock()
+	fake.MetricsSummaryStub = stub
+}
+
+func (fake *FakeMetricsClient) MetricsSummaryArgsForCall(i int) *api.QueryOptions {
+	fake.metricsSummaryMutex.RLock()
+	defer fake.metricsSummaryMutex.RUnlock()
+	argsForCall := fake.metricsSummaryArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeMetricsClient) MetricsSummaryReturns(result1 *api.MetricsSummary, result2 *api.QueryMeta, result3 error) {
+	fake.metricsSummaryMutex.Lock()
+	defer fake.metricsSummaryMutex.Unlock()
+	fake.MetricsSummaryStub = nil
+	fake.metricsSummaryReturns = struct {
+		result1 *api.MetricsSummary
+		result2 *api.QueryMeta
+		result3 error
+	}{result1, result2, result3}
+}
+
+func (fake *FakeMetricsClient) MetricsSummaryReturnsOnCall(i int, result1 *api.MetricsSummary, result2 *api.QueryMeta, result3 error) {
+	fake.metricsSummaryMutex.Lock()
+	defer fake.metricsSummaryMutex.Unlock()
+	fake.MetricsSummaryStub = nil
+	if fake.metricsSummaryReturnsOnCall == nil {
+		fake.metricsSummaryReturnsOnCall = make(map[int]struct {
+			result1 *api.MetricsSummary
+			result2 *api.QueryMeta
+			result3 error
+		})
+	}
+	fake.metricsSummaryReturnsOnCall[i] = struct {
+		result1 *api.MetricsSummary
+		result2 *api.QueryMeta
+		result3 error
+	}{result1, result2, result3}
 }
 
 func (fake *FakeMetricsClient) Invocations() map[string][][]interface{} {
 	fake.invocationsMutex.RLock()
 	defer fake.invocationsMutex.RUnlock()
-	fake.listMutex.RLock()
-	defer fake.listMutex.RUnlock()
+	fake.metricsMutex.RLock()
+	defer fake.metricsMutex.RUnlock()
+	fake.metricsSummaryMutex.RLock()
+	defer fake.metricsSummaryMutex.RUnlock()
 	copiedInvocations := map[string][][]interface{}{}
 	for key, value := range fake.invocations {
 		copiedInvocations[key] = value

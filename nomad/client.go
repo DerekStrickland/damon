@@ -48,7 +48,8 @@ type EventsClient interface {
 
 //go:generate counterfeiter . MetricsClient
 type MetricsClient interface {
-	List(*api.QueryOptions) ([]byte, error)
+	Metrics(*api.QueryOptions) ([]byte, error)
+	MetricsSummary(*api.QueryOptions) (*api.MetricsSummary, *api.QueryMeta, error)
 }
 
 type SearchOptions struct {
@@ -96,6 +97,7 @@ func Default(n *Nomad) error {
 	n.AllocClient = client.Allocations()
 	n.AllocFSClient = client.AllocFS()
 	n.DpClient = client.Deployments()
+	n.MetricsClient = client.Operator()
 
 	return nil
 }

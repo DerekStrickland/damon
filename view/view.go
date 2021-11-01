@@ -30,6 +30,7 @@ type Watcher interface {
 	SubscribeToTaskGroups(jobID string, notify func()) error
 	SubscribeToJobStatus(jobID string, notify func()) error
 	SubscribeToLogs(allocID, source string, notify func())
+	SubscribeToMetrics(notify func())
 
 	ForceUpdate()
 }
@@ -56,7 +57,8 @@ type Components struct {
 	JobTable        *component.JobTable
 	JobStatus       *component.JobStatus
 	DeploymentTable *component.DeploymentTable
-	MetricsTable    *component.MetricsTable
+	MetricsStream   *component.MetricsStream
+	MetricsSearch   *component.SearchField
 	NamespaceTable  *component.NamespaceTable
 	AllocationTable *component.AllocationTable
 	TaskGroupTable  *component.TaskGroupTable

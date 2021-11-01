@@ -19,6 +19,7 @@ const (
 	TopicTaskGroup api.Topic = api.Topic("TaskGroup")
 	TopicJobStatus api.Topic = api.Topic("JobStatus")
 	TopicLog       api.Topic = api.Topic("Log")
+	TopicMetrics   api.Topic = api.Topic("Metrics")
 )
 
 type Job struct {
@@ -148,20 +149,3 @@ Task Group  Desired  Placed  Healthy  Unhealthy  Progress Deadline
 cadence     1        1       1        0          2021-05-12T14:27:03+02:00
 iam         1        1       1        0          2021-05-12T14:28:37+02:00
 */
-
-type MetricsFormat string
-
-func (f *MetricsFormat) String() string {
-	return string(*f)
-}
-
-const (
-	NomadMetrics      MetricsFormat = "nomad"
-	PrometheusMetrics MetricsFormat = "prometheus"
-	UnknownMetrics    MetricsFormat = "unknown"
-)
-
-type Metrics struct {
-	Format  MetricsFormat
-	Payload interface{}
-}
