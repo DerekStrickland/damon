@@ -3,7 +3,7 @@ package refresher
 import (
 	"time"
 
-	"github.com/hcjulz/damon/watcher"
+	"github.com/hashicorp/damon/watcher"
 )
 
 const defaultRefreshInterval = time.Second * 2

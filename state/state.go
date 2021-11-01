@@ -15,6 +15,7 @@ type State struct {
 	Deployments []*models.Deployment
 	TaskGroups  []*models.TaskGroup
 	Allocations []*models.Alloc
+	Metrics     *models.Metrics
 	Namespaces  []*models.Namespace
 	Logs        []byte
 	JobStatus   *models.JobStatus
@@ -37,6 +38,7 @@ type Filter struct {
 	Logs        string
 	Jobs        string
 	Deployments string
+	Metrics     string
 	Namespaces  string
 	Allocations string
 	TaskGroups  string

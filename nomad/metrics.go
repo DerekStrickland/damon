@@ -10,20 +10,19 @@ import (
 )
 
 func (n *Nomad) List(_ *SearchOptions) (*models.Metrics, error) {
-	bytes, err := n.MetricsClient.List(nil)
+	payload, err := n.MetricsClient.List(nil)
 	if err != nil {
 		return nil, err
 	}
 
-	return decodeMetrics(bytes)
+	return toMetrics(payload)
 }
 
-func decodeMetrics(bytes []byte) (*models.Metrics, error) {
-
-	// We don't have the client configuration, so we don't know which type of metrics
-	// we get back. So we'll have to try to decode the payload and load it to our
-	// model object.
-	payload, err := decode(bytes)
+// We don't have the client configuration, so we don't know which type of metrics
+// we get back. So we'll have to try to decode the payload and load it to our
+// model object.
+func toMetrics(b []byte) (*models.Metrics, error) {
+	payload, err := decode(b)
 	if err != nil {
 		return nil, err
 	}

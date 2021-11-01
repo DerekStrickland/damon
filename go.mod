@@ -9,6 +9,7 @@ require (
 	github.com/hashicorp/go-cleanhttp v0.5.2 // indirect
 	github.com/hashicorp/nomad/api v0.0.0-20210804153318-c67b69bd0cc6
 	github.com/jessevdk/go-flags v1.5.0
+	github.com/maxbrunsfeld/counterfeiter/v6 v6.4.1 // indirect
 	github.com/mitchellh/mapstructure v1.4.1 // indirect
 	github.com/olekukonko/tablewriter v0.0.5
 	github.com/prometheus/client_golang v1.4.0 // indirect

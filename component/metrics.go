@@ -1,10 +1,8 @@
 package component
 
 import (
-	"fmt"
 	"strings"
 
-	"github.com/gdamore/tcell/v2"
 	"github.com/rivo/tview"
 
 	"github.com/hashicorp/damon/models"
@@ -12,129 +10,61 @@ import (
 	"github.com/hashicorp/damon/styles"
 )
 
-const (
-	TableTitleMetrics = "Metrics"
-)
+type MetricsStreamView struct {
+	TextView TextView
+	Props    *MetricsStreamViewProps
+	slot     *tview.Flex
+	buf      strings.Builder
+}
 
-var (
-	TableHeaderMetrics = []string{
-		LabelID,
-		LabelJobID,
-		LabelNamespace,
-		LabelStatus,
-		LabelStatusDescription,
+type MetricsStreamViewProps struct {
+	HandleNoResources models.HandlerFunc
+	Data              []byte
+}
+
+func NewMetricsStream() *MetricsStreamView {
+	t := primitive.NewTextView(tview.AlignLeft)
+	t.ModifyPrimitive(applyLogModifiers)
+
+	return &MetricsStreamView{
+		TextView: t,
+		Props:    &MetricsStreamViewProps{},
+		buf:      strings.Builder{},
 	}
-)
-
-//go:generate counterfeiter . SelectMetricsFunc
-type SelectMetricsFunc func(id string)
-
-type MetricsTable struct {
-	Table Table
-	Props *MetricsTableProps
-
-	slot *tview.Flex
 }
 
-type MetricsTableProps struct {
-	SelectMetrics   SelectMetricsFunc
-	HandleNoMetrics models.HandlerFunc
-
-	Data []*models.Metric
+func (l *MetricsStreamView) Bind(slot *tview.Flex) {
+	l.slot = slot
 }
 
-func NewMetricsTable() *MetricsTable {
-	t := primitive.NewTable()
-
-	mt := &MetricsTable{
-		Table: t,
-		Props: &MetricsTableProps{},
-	}
-
-	mt.Table.SetSelectedFunc(mt.metricsSelected)
-
-	return mt
-}
-
-func (m *MetricsTable) Bind(slot *tview.Flex) {
-	m.slot = slot
-
-}
-
-func (m *MetricsTable) Render() error {
-	if m.Props.SelectMetrics == nil || m.Props.HandleNoMetrics == nil {
-		return ErrComponentPropsNotSet
-	}
-
-	if m.slot == nil {
+func (l *MetricsStreamView) Render() error {
+	if l.slot == nil {
 		return ErrComponentNotBound
 	}
 
-	m.reset()
+	if l.Props.HandleNoResources == nil {
+		return ErrComponentPropsNotSet
+	}
 
-	if len(m.Props.Data) == 0 {
-		m.Props.HandleNoMetrics(
-			"%sno metrics available\n¯%s\\_( ͡• ͜ʖ ͡•)_/¯",
-			styles.HighlightPrimaryTag,
+	l.slot.Clear()
+	l.TextView.Clear()
+
+	if len(l.Props.Data) == 0 {
+		l.Props.HandleNoResources(
+			"%sWHOOOPS, no metrics found",
 			styles.HighlightSecondaryTag,
 		)
-
 		return nil
 	}
 
-	m.Table.SetTitle(fmt.Sprintf("%s (%s)", TableTitleMetrics, m.metricsTitle()))
-
-	m.Table.RenderHeader(TableHeaderDeployments)
-	m.renderRows()
-
-	m.slot.AddItem(m.Table.Primitive(), 0, 1, false)
+	l.TextView.SetText(string(l.Props.Data))
+	l.slot.AddItem(l.TextView.Primitive(), 0, 1, true)
 	return nil
 }
 
-func (m *MetricsTable) metricsTitle() string {
-	metrics := make([]string, len(m.Props.Data))
-	for _, d := range m.Props.Data {
-		if d.ID != "" {
-			metrics = append(metrics, d.ID)
-		}
-	}
-	return strings.Join(metrics, ",")
-}
-
-func (m *MetricsTable) reset() {
-	m.slot.Clear()
-	m.Table.Clear()
-}
-
-func (m *MetricsTable) metricsSelected(row, column int) {
-	metricsID := m.Table.GetCellContent(row, 0)
-	m.Props.SelectMetrics(metricsID)
-}
-
-func (m *MetricsTable) renderRows() {
-	for i, metric := range m.Props.Data {
-		row := []string{
-			metric.ID,
-		}
-
-		index := i + 1
-
-		c := m.getCellColor(metric.ID)
-		m.Table.RenderRow(row, index, c)
-	}
-}
-
-func (m *MetricsTable) getCellColor(status string) tcell.Color {
-	c := tcell.ColorWhite
-
-	//switch status {
-	//case models.StatusRunning:
-	//	c = styles.TcellColorHighlighPrimary
-	//case models.StatusPending:
-	//	c = tcell.ColorYellow
-	//case models.StatusFailed:
-	//	c = tcell.ColorRed
-	//}
-
-	return c
+func applyMetricsModifiers(t *tview.TextView) {
+	t.SetScrollable(true)
+	t.SetBorder(true)
+	t.ScrollToEnd()
+	t.SetTitle("Metrics")
 }

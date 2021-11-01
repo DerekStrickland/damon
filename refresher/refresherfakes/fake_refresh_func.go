@@ -4,7 +4,7 @@ package refresherfakes
 import (
 	"sync"
 
-	watcher "github.com/hashicorp/damon/refresher"
+	"github.com/hashicorp/damon/refresher"
 )
 
 type FakeRefreshFunc struct {
@@ -64,4 +64,4 @@ func (fake *FakeRefreshFunc) recordInvocation(key string, args []interface{}) {
 	fake.invocations[key] = append(fake.invocations[key], args)
 }
 
-var _ watcher.RefreshFunc = new(FakeRefreshFunc).Spy
+var _ refresher.RefreshFunc = new(FakeRefreshFunc).Spy

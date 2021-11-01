@@ -4,7 +4,7 @@ package nomadfakes
 import (
 	"sync"
 
-	"github.com/hcjulz/damon/nomad"
+	"github.com/hashicorp/damon/nomad"
 )
 
 type FakeClient struct {
