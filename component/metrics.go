@@ -10,34 +10,34 @@ import (
 	"github.com/hashicorp/damon/styles"
 )
 
-type MetricsStream struct {
+type Metrics struct {
 	TextView TextView
-	Props    *MetricsStreamProps
+	Props    *MetricsProps
 	slot     *tview.Flex
 	buf      strings.Builder
 }
 
-type MetricsStreamProps struct {
+type MetricsProps struct {
 	HandleNoResources models.HandlerFunc
 	Data              []byte
 }
 
-func NewMetricsStream() *MetricsStream {
+func NewMetricsStream() *Metrics {
 	t := primitive.NewTextView(tview.AlignLeft)
-	t.ModifyPrimitive(applyLogModifiers)
+	t.ModifyPrimitive(applyMetricsModifiers)
 
-	return &MetricsStream{
+	return &Metrics{
 		TextView: t,
-		Props:    &MetricsStreamProps{},
+		Props:    &MetricsProps{},
 		buf:      strings.Builder{},
 	}
 }
 
-func (l *MetricsStream) Bind(slot *tview.Flex) {
+func (l *Metrics) Bind(slot *tview.Flex) {
 	l.slot = slot
 }
 
-func (l *MetricsStream) Render() error {
+func (l *Metrics) Render() error {
 	if l.slot == nil {
 		return ErrComponentNotBound
 	}

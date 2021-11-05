@@ -6,22 +6,36 @@ import (
 	"regexp"
 
 	"github.com/hashicorp/damon/component"
+	"github.com/hashicorp/damon/models"
 	"github.com/hashicorp/damon/styles"
 )
 
 func (v *View) Metrics() {
-	v.Layout.Body.Clear()
+	v.viewSwitch()
 
 	v.Layout.Container.SetInputCapture(v.InputMetrics)
 	v.components.Commands.Update(component.MetricsCommands)
 
+	search := v.components.MetricsSearch
+	view := v.components.Metrics
+
 	update := func() {
-		v.components.MetricsStream.Props.Data = filterMetrics(v.state.Metrics, v.state.Filter.Metrics)
-		v.components.MetricsStream.Render()
+		v.components.Metrics.Props.Data = filterMetrics(v.state.Metrics, v.state.Filter.Metrics)
+		view.Render()
 		v.Draw()
 	}
 
-	v.Layout.Container.SetFocus(v.components.MetricsStream.TextView.Primitive())
+	search.Props.ChangedFunc = func(text string) {
+		v.state.Filter.Metrics = text
+		update()
+	}
+
+	v.Watcher.Subscribe(models.TopicMetrics, update)
+	if len(v.state.Metrics) == 0 {
+		v.Watcher.ForceUpdate()
+	}
+
+	v.Layout.Container.SetFocus(v.components.Metrics.TextView.Primitive())
 
 	update()
 
@@ -32,6 +46,7 @@ func (v *View) Metrics() {
 	//})
 
 	v.Layout.Container.SetInputCapture(v.InputMetrics)
+	//v.Layout.Container.SetFocus(search.)
 }
 
 func filterMetrics(metrics []byte, filter string) []byte {

@@ -37,10 +37,18 @@ func (w *Watcher) SubscribeToMetrics(notify func()) {
 }
 
 func (w *Watcher) updateMetrics() {
-	metrics, err := w.nomad.Metrics(nil)
-	if err != nil {
-		w.NotifyHandler(models.HandleError, err.Error())
-	}
+	metricsCh, errCh := w.nomad.Metrics(nil)
 
-	w.state.Metrics = metrics
+	select {
+	case metrics := <-metricsCh:
+		if len(metrics) > 0 {
+			w.state.Metrics = metrics
+		} else {
+			w.state.Metrics = []byte("metrics not available")
+		}
+	case err := <-errCh:
+		if err != nil {
+			w.NotifyHandler(models.HandleError, err.Error())
+		}
+	}
 }

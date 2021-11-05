@@ -1,6 +1,7 @@
 package watcher
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/hashicorp/nomad/api"
@@ -28,7 +29,7 @@ type Nomad interface {
 	JobAllocs(string, *nomad.SearchOptions) ([]*models.Alloc, error)
 	Logs(allocID, taskName, logType string, cancel <-chan struct{}) (<-chan *api.StreamFrame, <-chan error)
 	Stream(topics nomad.Topics, index uint64) (<-chan *api.Events, error)
-	Metrics(*nomad.SearchOptions) ([]byte, error)
+	Metrics(*nomad.SearchOptions) (<-chan []byte, <-chan error)
 }
 
 // Watcher watches a Nomad cluster for updates and
@@ -115,14 +116,21 @@ func (w *Watcher) Watch() {
 		api.TopicJob:        {"*"},
 		api.TopicDeployment: {"*"},
 		api.TopicAllocation: {"*"},
+		models.TopicMetrics: {"*"},
 	}
 
 	w.update(api.TopicJob)
 	w.update(api.TopicDeployment)
 	w.update(api.TopicAllocation)
+	w.update(models.TopicMetrics)
 
 	index := uint64(1000)
 	eventCh, err := w.nomad.Stream(topics, index)
+	if err != nil {
+		w.NotifyHandler(models.HandleFatal, err.Error())
+	}
+
+	metricsCh, errCh := w.nomad.Metrics(nil)
 	if err != nil {
 		w.NotifyHandler(models.HandleFatal, err.Error())
 	}
@@ -138,6 +146,12 @@ func (w *Watcher) Watch() {
 			for _, e := range event.Events {
 				w.update(e.Topic)
 			}
+		case metrics := <-metricsCh:
+			if len(metrics) > 0 {
+				fmt.Printf(string(metrics))
+			}
+		case err = <-errCh:
+			fmt.Printf(err.Error())
 		case topic := <-w.forceUpdate:
 			w.update(topic)
 
@@ -160,6 +174,8 @@ func (w *Watcher) update(topic api.Topic) {
 		w.updateAllocations()
 	case api.TopicDeployment:
 		w.updateDeployments()
+	case models.TopicMetrics:
+		w.updateMetrics()
 	}
 
 	w.Notify(topic)

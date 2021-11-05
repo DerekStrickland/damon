@@ -82,7 +82,7 @@ func main() {
 		JobTable:        jobs,
 		JobStatus:       jobStatus,
 		DeploymentTable: depl,
-		MetricsStream:   metrics,
+		Metrics:         metrics,
 		MetricsSearch:   metricsSearch,
 		NamespaceTable:  namespaces,
 		AllocationTable: allocations,

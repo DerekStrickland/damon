@@ -57,7 +57,7 @@ type Components struct {
 	JobTable        *component.JobTable
 	JobStatus       *component.JobStatus
 	DeploymentTable *component.DeploymentTable
-	MetricsStream   *component.MetricsStream
+	Metrics         *component.Metrics
 	MetricsSearch   *component.SearchField
 	NamespaceTable  *component.NamespaceTable
 	AllocationTable *component.AllocationTable
